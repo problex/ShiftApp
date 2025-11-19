@@ -1,0 +1,300 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f5f5f5;
+  --foreground: #1a1a1a;
+  --text-primary: #2d2d2d;
+  --text-secondary: #4a4a4a;
+  --text-muted: #6b6b6b;
+}
+
+/* Force dark text even in dark mode for better readability */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f5f5f5;
+    --foreground: #1a1a1a;
+    --text-primary: #2d2d2d;
+    --text-secondary: #4a4a4a;
+    --text-muted: #6b6b6b;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: linear-gradient(135deg, #fce7f3 0%, #dbeafe 50%, #e0e7ff 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+  
+  /* Larger touch targets for mobile */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing on mobile */
+  .bento-panel {
+    padding: 1rem !important;
+    margin-bottom: 1rem;
+  }
+  
+  /* Improve touch interactions */
+  * {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Prevent text selection on buttons */
+  button {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Better scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Text colors - slightly lighter for better readability */
+body, p, span, div, label {
+  color: var(--text-primary) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+}
+
+/* Override all gray text classes */
+.text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-700 {
+  color: var(--text-primary) !important;
+}
+
+.text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+.text-gray-300 {
+  color: var(--text-muted) !important;
+}
+
+/* Enhanced buttons with pink/blue theme */
+button {
+  transition: all 0.3s ease;
+}
+
+button.bg-blue-600 {
+  background: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #a78bfa 100%) !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(147, 51, 234, 0.2);
+}
+
+button.bg-blue-600:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #9333ea 100%) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 4px 12px rgba(147, 51, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+button.bg-red-600 {
+  background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #f43f5e 100%) !important;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3), 0 2px 8px rgba(244, 63, 94, 0.2);
+}
+
+button.bg-red-600:hover {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #e11d48 100%) !important;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4), 0 4px 12px rgba(244, 63, 94, 0.3);
+  transform: translateY(-2px);
+}
+
+button.bg-gray-600,
+a.bg-gray-600 {
+  background: linear-gradient(135deg, #a78bfa 0%, #818cf8 50%, #60a5fa 100%) !important;
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.25), 0 2px 8px rgba(59, 130, 246, 0.2);
+  border: none !important;
+}
+
+button.bg-gray-600:hover,
+a.bg-gray-600:hover {
+  background: linear-gradient(135deg, #9333ea 0%, #6366f1 50%, #3b82f6 100%) !important;
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.35), 0 4px 12px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Override hover:bg-gray-700 for links */
+a.bg-gray-600.hover\:bg-gray-700:hover,
+a.hover\:bg-gray-700.bg-gray-600:hover {
+  background: linear-gradient(135deg, #9333ea 0%, #6366f1 50%, #3b82f6 100%) !important;
+}
+
+a {
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+/* Make sure form inputs have dark text */
+input, textarea, select {
+  color: var(--text-primary) !important;
+  background-color: white !important;
+  font-size: 16px; /* Prevents zoom on iOS */
+}
+
+@media (max-width: 640px) {
+  input, textarea, select {
+    padding: 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7;
+}
+
+/* Ensure labels are readable */
+label {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+}
+
+/* Make sure all text in forms is readable */
+form, form * {
+  color: var(--text-primary) !important;
+}
+
+form label {
+  color: var(--text-primary) !important;
+}
+
+form .text-gray-600,
+form .text-gray-700,
+form .text-gray-500 {
+  color: var(--text-secondary) !important;
+}
+
+/* Make small text readable */
+.text-xs, .text-sm {
+  color: var(--text-primary) !important;
+}
+
+.text-xs.text-gray-500,
+.text-xs.text-gray-600,
+.text-xs.text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+/* Ensure all card content is readable */
+.bento-panel p,
+.bento-panel span,
+.bento-panel div,
+.bento-panel h1,
+.bento-panel h2,
+.bento-panel h3,
+.bento-panel h4,
+.bento-panel h5,
+.bento-panel h6 {
+  color: var(--text-primary) !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Bento-style panel with pink and blue gradients */
+  .bento-panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 241, 242, 0.8) 50%, rgba(239, 246, 255, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 193, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(147, 51, 234, 0.1), 0 4px 16px rgba(59, 130, 246, 0.1);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    color: var(--text-primary) !important;
+  }
+  
+  .bento-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(147, 51, 234, 0.15), 0 6px 20px rgba(59, 130, 246, 0.15);
+    border-color: rgba(255, 182, 193, 0.5);
+  }
+  
+  /* Mobile optimizations for bento panels */
+  @media (max-width: 640px) {
+    .bento-panel {
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    
+    .bento-panel:hover {
+      transform: none; /* Disable hover transform on mobile */
+    }
+  }
+  
+  .bento-panel * {
+    color: var(--text-primary) !important;
+  }
+  
+  .bento-panel .text-gray-600,
+  .bento-panel .text-gray-700,
+  .bento-panel .text-gray-500 {
+    color: var(--text-secondary) !important;
+  }
+  
+  .bento-panel-dark {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.9) 0%, rgba(236, 72, 153, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 182, 193, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(147, 51, 234, 0.2), 0 4px 16px rgba(59, 130, 246, 0.2);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  /* Smooth animations */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+

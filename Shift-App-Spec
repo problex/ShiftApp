@@ -1,0 +1,340 @@
+# Shift Tracker Application - Feature Specifications
+
+## Overview
+This document outlines the detailed feature specifications for the Shift Tracker web application. Each feature includes user flows, data requirements, and integration points with the existing database schema.
+
+## 2. Favorite Shifts
+
+### 2.1 Create Favorite Shifts
+**Description:** Allows users to create shift templates with all required fields.
+**User Flow:**
+1. User navigates to Favorites Management page
+2. User clicks "Add New Favorite Shift" button
+3. System displays form with:
+   - Title (required)
+   - Start Time (required, time format HH:mm)
+   - End Time (required, time format HH:mm)
+   - Pay Rate (required, decimal value)
+   - Client (optional)
+   - Color (required, 6 different Pastal color Options)
+4. User fills in all required fields
+5. System validates data according to schema rules
+6. System creates record in FavoriteShifts collection
+7. System displays success message and refreshes favorites list
+
+**Data Requirements:**
+- Title (string, required)
+- Start Time (time object, required)
+- End Time (time object, required)
+- Pay Rate (number, positive value, required)
+- Client (string, optional)
+- Color (hex color code, required)
+
+**Integration Points:**
+- Database: FavoriteShifts collection
+- Validation: Schema validation rules
+
+### 2.2 View Favorite Shifts
+**Description:** Displays all favorite shifts.
+**User Flow:**
+1. User navigates to Favorites Management page
+2. System retrieves all records from FavoriteShifts collection
+3. System displays list of favorite shifts with:
+   - Title
+   - Start Time
+   - End Time
+   - Pay Rate
+   - Client
+   - Color indicator
+4. Each shift is displayed in a visually distinct panel
+
+**Data Requirements:**
+- All fields from FavoriteShifts collection
+
+**Integration Points:**
+- Database: FavoriteShifts collection
+- UI: Bento-style panels for each favorite shift
+
+### 2.3 Edit Favorite Shifts
+**Description:** Allows users to modify existing favorite shift templates.
+**User Flow:**
+1. User navigates to Favorites Management page
+2. User clicks "Edit" button on desired favorite shift
+3. System displays pre-filled form with current values
+4. User modifies fields as needed
+5. System validates data according to schema rules
+6. System updates record in FavoriteShifts collection
+7. System displays success message and refreshes favorites list
+
+**Data Requirements:**
+- All fields from FavoriteShifts collection (with updated values)
+
+**Integration Points:**
+- Database: FavoriteShifts collection with update operation
+- Validation: Schema validation rules
+
+### 2.4 Delete Favorite Shifts
+**Description:** Allows users to remove favorite shift templates.
+**User Flow:**
+1. User navigates to Favorites Management page
+2. User clicks "Delete" button on desired favorite shift
+3. System displays confirmation dialog
+4. If confirmed, system deletes record from FavoriteShifts collection
+5. System displays success message and refreshes favorites list
+
+**Data Requirements:**
+- FavoriteShift ID (to identify which record to delete)
+
+**Integration Points:**
+- Database: FavoriteShifts collection with delete operation
+
+## 3. Shift Management
+
+### 3.1 Add Shifts from Favorites
+**Description:** Allows users to quickly add favorite shift templates to any day in calendar views.
+**User Flow:**
+1. User navigates to Week or Month view page
+2. User clicks on desired date
+3. System displays modal with user's favorite shifts
+4. User selects a favorite shift template
+5. System creates new Shift record in Shifts collection:
+   - Sets date to selected day
+   - Sets favoriteShiftId to selected favorite shift ID
+   - Copies other fields (title, startTime, endTime, payRate, client, color) from favorite shift
+6. System displays success message and refreshes calendar view
+
+**Data Requirements:**
+- Date (from calendar selection)
+- FavoriteShift ID (to reference template)
+- All fields copied from FavoriteShifts collection
+
+**Integration Points:**
+- Database: Shifts collection
+- Relationships: userId to Users collection, favoriteShiftId to FavoriteShifts collection
+- Calendar views: WeekView and MonthView components
+
+### 3.2 Edit Shifts
+**Description:** Allows users to modify existing shift records.
+**User Flow:**
+1. User navigates to Week or Month view page
+2. User clicks on existing shift in calendar view
+3. System displays edit form with current shift details
+4. User modifies fields as needed
+5. System validates data according to schema rules
+6. System updates record in Shifts collection
+7. System displays success message and refreshes calendar view
+
+**Data Requirements:**
+- All fields from Shifts collection (with updated values)
+
+**Integration Points:**
+- Database: Shifts collection with update operation
+- Validation: Schema validation rules
+
+### 3.3 Delete Shifts
+**Description:** Allows users to remove shift records.
+**User Flow:**
+1. User navigates to Week or Month view page
+2. User clicks on existing shift in calendar view
+3. System displays edit form with current shift details
+4. User clicks "Delete" button
+5. System displays confirmation dialog
+6. If confirmed, system deletes record from Shifts collection
+7. System displays success message and refreshes calendar view
+
+**Data Requirements:**
+- Shift ID (to identify which record to delete)
+
+**Integration Points:**
+- Database: Shifts collection with delete operation
+
+### 3.4 Sort Shifts by Start Time
+**Description:** Displays shifts sorted by start time within each day.
+**User Flow:**
+1. System retrieves shift records for a given date range
+2. System sorts records by startTime field in ascending order
+3. System displays shifts in calendar view in sorted order
+
+**Data Requirements:**
+- Shift records with startTime field
+
+**Integration Points:**
+- Database: Shifts collection with date and time sorting
+- Calendar views: WeekView and MonthView components
+
+## 4. Calendar Views
+
+### 4.1 Week View
+**Description:** Displays a 7-day layout showing shift summaries for each day.
+**User Flow:**
+1. User navigates to Week View page
+2. System calculates current week based on today's date
+3. System retrieves all shifts from the shift collection for the 7-day period
+4. System displays 7-day layout with:
+   - Day headers (date and day of week)
+   - Shift summaries for each day
+   - Clickable days to add favorite shifts
+5. Each shift summary shows:
+   - Title
+   - Client
+   - Color indicator
+
+**Data Requirements:**
+- Date range (7 consecutive days)
+- Shift records for the date range
+
+**Integration Points:**
+- Database: Shifts collection with date range query
+- UI: Bento-style panels for each shift summary
+- Navigation: Previous/next week buttons
+
+### 4.2 Month View
+**Description:** Displays full calendar month with daily shift indicators.
+**User Flow:**
+1. User navigates to Month View page
+2. System calculates current month based on today's date
+3. System retrieves all shifts from Users collection for the month
+4. System displays calendar grid:
+   - Month header with navigation controls
+   - Day headers (Sunday through Saturday)
+   - Calendar days with shift indicators
+   - Clickable days to add favorite shifts
+5. Each day shows:
+   - Date number
+   - Shift indicators (color-coded dots or small panels)
+
+**Data Requirements:**
+- Date range (full month)
+- Shift records for the month
+
+**Integration Points:**
+- Database: Shifts collection with date range query
+- UI: Calendar grid layout with shift indicators
+- Navigation: Previous/next month buttons
+
+### 4.3 Day Selection for Adding Shifts
+**Description:** Allows users to add favorite shifts to any day from calendar views.
+**User Flow:**
+1. User clicks on a day in either Week or Month view
+2. System displays modal with user's favorite shifts
+3. User selects a favorite shift template
+4. System creates new Shift record as described in "Add Shifts from Favorites"
+
+**Data Requirements:**
+- Selected date
+- FavoriteShift ID
+
+**Integration Points:**
+- Calendar views: WeekView and MonthView components
+- Favorite shifts management: UI for selecting templates
+
+### 4.4 Shift Details View
+**Description:** Allows users to view/edit shift details by clicking on a shift.
+**User Flow:**
+1. User clicks on a shift in calendar view
+2. System displays modal with shift details:
+   - Title
+   - Date
+   - Start Time
+   - End Time
+   - Pay Rate
+   - Client
+   - Color
+3. User can edit fields or delete shift
+4. Changes are saved to database as described in "Edit Shifts" and "Delete Shifts"
+
+**Data Requirements:**
+- Shift record data
+
+**Integration Points:**
+- Database: Shifts collection
+- UI: Modal form for viewing/editing details
+
+## 5. User Interface
+
+### 5.1 Pages
+**Description:** Defines all pages in the application with their purpose and navigation.
+**Pages:**
+1. **Favorites Management Page**
+   - Purpose: Manage favorite shift templates
+   - Navigation: From dashboard
+2. **Week View Page**
+   - Purpose: Display weekly shift schedule
+   - Navigation: From dashboard
+3. **Month View Page**
+   - Purpose: Display monthly shift schedule
+   - Navigation: From dashboard
+
+**Data Requirements:**
+- Page-specific UI components and data requirements
+
+**Integration Points:**
+- Routing system for page navigation
+- Authentication middleware to protect pages
+
+### 5.2 Bento-Style Design
+**Description:** Implements modular panels with rounded corners and soft gradients.
+**User Flow:**
+1. All UI components are styled as bento-style panels
+2. Panels have:
+   - Rounded corners (8px radius)
+   - Soft background gradients
+   - Subtle shadows for depth
+   - Consistent spacing and alignment
+3. Components include:
+   - Login/registration forms
+   - Favorite shift cards
+   - Shift summary panels
+   - Calendar views
+
+**Data Requirements:**
+- CSS styling rules for bento-style components
+
+**Integration Points:**
+- Frontend framework (React/Vue/Angular)
+- CSS framework or custom styling system
+
+### 5.3 Smooth Animations
+**Description:** Implements smooth transitions for form transitions and view changes.
+**User Flow:**
+1. Page transitions have fade-in/fade-out effects
+2. Form modals slide in from bottom or center
+3. Calendar navigation has smooth transitions between weeks/months
+4. Shift creation/editing has smooth animations for UI updates
+
+**Data Requirements:**
+- Animation timing and easing functions
+
+**Integration Points:**
+- CSS transitions and animations
+- Frontend framework animation capabilities
+
+### 5.4 Close Buttons
+**Description:** Provides close functionality for all pop-up forms and views.
+**User Flow:**
+1. All modals and pop-ups have visible close buttons (X icon)
+2. Clicking close button dismisses the modal/view
+3. Forms can be closed without saving changes
+
+**Data Requirements:**
+- UI elements with close functionality
+
+**Integration Points:**
+- Frontend component structure for modals
+- Event handling for close actions
+
+### 5.5 Mobile-Friendly Responsive Design
+**Description:** Ensures application works well on all device sizes.
+**User Flow:**
+1. Layout adjusts based on screen size
+2. Touch-friendly controls and buttons
+3. Responsive grid system for calendar views
+4. Appropriate font sizing and spacing for mobile
+
+**Data Requirements:**
+- Responsive CSS media queries
+- Mobile-first design approach
+
+**Integration Points:**
+- CSS framework or custom responsive system
+- Frontend component structure

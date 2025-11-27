@@ -78,7 +78,7 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <div className="flex items-center gap-3">
             <Image
-              src="/icon.png"
+              src="/icon.svg"
               alt="Shift Tracker Icon"
               width={48}
               height={48}

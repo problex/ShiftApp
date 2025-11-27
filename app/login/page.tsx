@@ -81,7 +81,7 @@ export default function LoginPage() {
       <div className="bento-panel w-full max-w-md fade-in">
         <div className="flex flex-col items-center mb-6">
           <Image
-            src="/icon.png"
+            src="/icon.svg"
             alt="Shift Tracker Icon"
             width={80}
             height={80}

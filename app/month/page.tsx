@@ -239,7 +239,7 @@ export default function MonthPage() {
           </div>
         </div>
 
-        <div className="bento-panel overflow-x-auto !p-2 sm:!p-6">
+        <div className="bento-panel overflow-x-auto !px-0.5 !py-2 sm:!px-6 sm:!py-6">
           <div className="grid grid-cols-7 gap-0.5 sm:gap-2 mb-2 min-w-[350px]">
             {weekDays.map((day) => (
               <div key={day} className="text-center font-semibold text-gray-700 py-2">

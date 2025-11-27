@@ -2,6 +2,28 @@
 
 A modern web application for tracking and managing work shifts with a beautiful bento-style UI.
 
+**Live Demo**: [https://shiftapp.problex.com/](https://shiftapp.problex.com/)
+
+## Screenshots
+
+### Login Page
+![Login Page](docs/screenshots/login.png)
+
+### Registration Page
+![Registration Page](docs/screenshots/register.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Month View
+![Month View](docs/screenshots/month-view.png)
+
+### Week View
+![Week View](docs/screenshots/week-view.png)
+
+### Favorites Management
+![Favorites](docs/screenshots/favorites.png)
+
 ## Features
 
 - **User Authentication**: Secure login and registration system

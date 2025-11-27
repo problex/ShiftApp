@@ -14,7 +14,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { title, startTime, endTime, payRate, client, color } = body;
+    const { title, startTime, endTime, payRate, client, color, highPriority } = body;
 
     if (!title || !startTime || !endTime || payRate === undefined || payRate === null || payRate === '' || !color) {
       return NextResponse.json(
@@ -42,6 +42,7 @@ export async function PUT(
           payRate: payRateNum,
           client: client || null,
           color,
+          highPriority: highPriority === true || highPriority === 'true',
         },
       }
     );

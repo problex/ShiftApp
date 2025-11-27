@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -78,7 +79,17 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="bento-panel w-full max-w-md fade-in">
-        <h1 className="text-3xl font-bold text-center mb-6">Shift Tracker</h1>
+        <div className="flex flex-col items-center mb-6">
+          <Image
+            src="/icon.png"
+            alt="Shift Tracker Icon"
+            width={80}
+            height={80}
+            className="mb-4"
+            priority
+          />
+          <h1 className="text-3xl font-bold text-center">Shift Tracker</h1>
+        </div>
         <h2 className="text-xl font-semibold text-center mb-8">Login</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">

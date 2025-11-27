@@ -19,6 +19,7 @@ export default function FavoritesPage() {
     payRate: '',
     client: '',
     color: PASTEL_COLORS[0],
+    highPriority: false,
   });
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function FavoritesPage() {
         payRate: favorite.payRate.toString(),
         client: favorite.client || '',
         color: favorite.color,
+        highPriority: favorite.highPriority || false,
       });
     } else {
       setEditingFavorite(null);
@@ -72,6 +74,7 @@ export default function FavoritesPage() {
         payRate: '',
         client: '',
         color: PASTEL_COLORS[0],
+        highPriority: false,
       });
     }
     setIsModalOpen(true);
@@ -100,6 +103,7 @@ export default function FavoritesPage() {
           payRate: parseFloat(formData.payRate),
           client: formData.client || undefined,
           color: formData.color,
+          highPriority: formData.highPriority,
         }),
       });
 
@@ -191,6 +195,11 @@ export default function FavoritesPage() {
                   />
                 </div>
                 <div className="space-y-2 text-sm">
+                  {favorite.highPriority && (
+                    <div className="inline-block px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">
+                      ⚡ High Priority
+                    </div>
+                  )}
                   <p>
                     <span className="font-medium">Time:</span> {favorite.startTime} - {favorite.endTime}
                   </p>
@@ -300,6 +309,21 @@ export default function FavoritesPage() {
                   />
                 ))}
               </div>
+            </div>
+
+            <div>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.highPriority}
+                  onChange={(e) => setFormData({ ...formData, highPriority: e.target.checked })}
+                  className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm font-medium">High Priority</span>
+              </label>
+              <p className="text-xs text-gray-500 mt-1 ml-7">
+                High priority shifts will be prominently displayed in the month view
+              </p>
             </div>
 
             <div className="flex gap-2">

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const funnyGreetings = [
   "Welcome back! Time to clock in... or out? 🤔",
@@ -75,7 +76,17 @@ export default function DashboardPage() {
     <div className="min-h-screen p-2 sm:p-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Shift Tracker</h1>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/icon.png"
+              alt="Shift Tracker Icon"
+              width={48}
+              height={48}
+              className="sm:w-12 sm:h-12"
+              priority
+            />
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Shift Tracker</h1>
+          </div>
           <button
             onClick={handleLogout}
             className="w-full sm:w-auto px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm sm:text-base"

@@ -15,6 +15,7 @@ export interface FavoriteShift {
   payRate: number;
   client?: string;
   color: string; // hex color code
+  highPriority?: boolean;
   createdAt?: Date;
 }
 
@@ -29,6 +30,7 @@ export interface Shift {
   payRate: number;
   client?: string;
   color: string; // hex color code
+  highPriority?: boolean;
   createdAt?: Date;
 }
 

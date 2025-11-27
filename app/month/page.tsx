@@ -37,6 +37,7 @@ export default function MonthPage() {
     payRate: '',
     client: '',
     color: '#FFB3BA',
+    highPriority: false,
   });
 
   useEffect(() => {
@@ -99,6 +100,7 @@ export default function MonthPage() {
       payRate: shift.payRate.toString(),
       client: shift.client || '',
       color: shift.color,
+      highPriority: shift.highPriority || false,
     });
     setIsEditModalOpen(true);
   };
@@ -119,6 +121,7 @@ export default function MonthPage() {
           payRate: favorite.payRate,
           client: favorite.client,
           color: favorite.color,
+          highPriority: favorite.highPriority || false,
         }),
       });
 
@@ -188,6 +191,11 @@ export default function MonthPage() {
     });
   };
 
+  const getHighPriorityShiftForDate = (date: Date) => {
+    const dayShifts = getShiftsForDate(date);
+    return dayShifts.find((shift) => shift.highPriority === true);
+  };
+
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
   const calendarStart = startOfWeek(monthStart, { weekStartsOn: 0 });
@@ -205,7 +213,7 @@ export default function MonthPage() {
   }
 
   return (
-    <div className="min-h-screen p-2 sm:p-4">
+    <div className="min-h-screen p-1 sm:p-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col gap-4 mb-4 sm:mb-8">
           <Link
@@ -231,24 +239,25 @@ export default function MonthPage() {
           </div>
         </div>
 
-        <div className="bento-panel overflow-x-auto">
-          <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 min-w-[350px]">
+        <div className="bento-panel overflow-x-auto !p-2 sm:!p-6">
+          <div className="grid grid-cols-7 gap-0.5 sm:gap-2 mb-2 min-w-[350px]">
             {weekDays.map((day) => (
               <div key={day} className="text-center font-semibold text-gray-700 py-2">
                 {day}
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-7 gap-1 sm:gap-2 min-w-[350px]">
+          <div className="grid grid-cols-7 gap-0.5 sm:gap-2 min-w-[350px]">
             {calendarDays.map((day, index) => {
               const dayShifts = getShiftsForDate(day);
+              const highPriorityShift = getHighPriorityShiftForDate(day);
               const isCurrentMonth = isSameMonth(day, currentMonth);
               const isToday = isSameDay(day, new Date());
 
               return (
                 <div
                   key={index}
-                  className={`min-h-[60px] sm:min-h-[80px] md:min-h-[100px] pt-0.5 sm:pt-1 px-1 sm:px-2 pb-1 sm:pb-2 rounded-lg border-2 transition-all touch-manipulation ${
+                  className={`min-h-[60px] sm:min-h-[80px] md:min-h-[100px] pt-0.5 sm:pt-1 px-0.5 sm:px-2 pb-1 sm:pb-2 rounded-lg border-2 transition-all touch-manipulation ${
                     isCurrentMonth
                       ? 'bg-white border-gray-200'
                       : 'bg-gray-50 border-gray-100'
@@ -256,11 +265,20 @@ export default function MonthPage() {
                 >
                   <button
                     onClick={() => handleDateClick(day)}
-                    className={`w-full text-left mb-0.5 sm:mb-1 text-xs sm:text-sm touch-manipulation ${
+                    className={`w-full text-left mb-0.5 sm:mb-1 touch-manipulation ${
                       isCurrentMonth ? 'text-gray-900' : 'text-gray-400'
                     } ${isToday ? 'font-bold text-blue-600' : ''}`}
                   >
-                    {format(day, 'd')}
+                    <div className="flex items-baseline gap-1 flex-wrap">
+                      <span className={`text-xs sm:text-sm ${isToday ? 'text-blue-600' : ''}`}>
+                        {format(day, 'd')}
+                      </span>
+                      {highPriorityShift && (
+                        <span className="text-sm sm:text-base md:text-lg font-bold text-red-600 truncate">
+                          {highPriorityShift.title}
+                        </span>
+                      )}
+                    </div>
                   </button>
                   <div className="space-y-0.5 sm:space-y-1">
                     {dayShifts.slice(0, 3).map((shift) => (
@@ -398,6 +416,21 @@ export default function MonthPage() {
                 onChange={(e) => setFormData({ ...formData, client: e.target.value })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
+            </div>
+
+            <div>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.highPriority}
+                  onChange={(e) => setFormData({ ...formData, highPriority: e.target.checked })}
+                  className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-sm font-medium">High Priority</span>
+              </label>
+              <p className="text-xs text-gray-500 mt-1 ml-7">
+                High priority shifts will be prominently displayed in the month view
+              </p>
             </div>
 
             <div className="flex gap-2">

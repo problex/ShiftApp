@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, startTime, endTime, payRate, client, color } = body;
+    const { title, startTime, endTime, payRate, client, color, highPriority } = body;
 
     if (!title || !startTime || !endTime || payRate === undefined || payRate === null || payRate === '' || !color) {
       return NextResponse.json(
@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
       payRate: payRateNum,
       client: client || null,
       color,
+      highPriority: highPriority === true || highPriority === 'true',
       createdAt: new Date(),
     });
 
